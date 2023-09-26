@@ -2,6 +2,9 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
+
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
@@ -26,33 +29,33 @@
 ## Installation
 
 ```bash
-bun install
+$ pnpm install
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ bun run start
+$ pnpm run start
 
 # watch mode
-$ bun run start:dev
+$ pnpm run start:dev
 
 # production mode
-$ bun run start:prod
+$ pnpm run start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ bun run test
+$ pnpm run test
 
 # e2e tests
-$ bun run test:e2e
+$ pnpm run test:e2e
 
 # test coverage
-$ bun run test:cov
+$ pnpm run test:cov
 ```
 
 ## Support
