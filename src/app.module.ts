@@ -9,6 +9,7 @@ import { CharactersModule } from './characters/characters.module';
 import { CommentsModule } from './comments/comments.module';
 import { GroupsModule } from './groups/groups.module';
 import { UsersModule } from './users/users.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     CommentsModule,
     GroupsModule,
     UsersModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
