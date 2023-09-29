@@ -1,1 +1,1 @@
-export class Comic {}
+export class Comic { }

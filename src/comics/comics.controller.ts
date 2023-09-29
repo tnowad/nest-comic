@@ -1,35 +1,42 @@
-import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ComicsService } from './comics.service';
 import { CreateComicDto } from './dto/create-comic.dto';
 import { UpdateComicDto } from './dto/update-comic.dto';
 
-@Controller()
+@Controller('comics')
 export class ComicsController {
-  constructor(private readonly comicsService: ComicsService) {}
+  constructor(private readonly comicsService: ComicsService) { }
 
-  @MessagePattern('createComic')
-  create(@Payload() createComicDto: CreateComicDto) {
+  @Post()
+  create(@Body() createComicDto: CreateComicDto) {
     return this.comicsService.create(createComicDto);
   }
 
-  @MessagePattern('findAllComics')
+  @Get()
   findAll() {
     return this.comicsService.findAll();
   }
 
-  @MessagePattern('findOneComic')
-  findOne(@Payload() id: number) {
-    return this.comicsService.findOne(id);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.comicsService.findOne(+id);
   }
 
-  @MessagePattern('updateComic')
-  update(@Payload() updateComicDto: UpdateComicDto) {
-    return this.comicsService.update(updateComicDto.id, updateComicDto);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateComicDto: UpdateComicDto) {
+    return this.comicsService.update(+id, updateComicDto);
   }
 
-  @MessagePattern('removeComic')
-  remove(@Payload() id: number) {
-    return this.comicsService.remove(id);
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.comicsService.remove(+id);
   }
 }
