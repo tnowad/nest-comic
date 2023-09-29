@@ -1,13 +1,16 @@
 import { Author } from 'src/authors/entities/author.entity';
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'comic' })
 export class Comic {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -18,27 +21,19 @@ export class Comic {
   @Column()
   title: string;
 
-  @Column()
-  totalFollows: number;
-
-  @Column()
-  totalComments: number;
-
-  @Column()
-  totalViews: number;
-
   @ManyToMany(() => Author, (author) => author.comics)
   @JoinTable()
-  authors: Author[];
+  authors?: Author[];
+
   @Column()
   coverImage: string;
 
-  @Column()
-  averageRating: number;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Column()
-  totalRating: number;
-
-  @Column({ type: 'timestamp' })
+  @UpdateDateColumn()
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 }

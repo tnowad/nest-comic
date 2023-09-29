@@ -1,7 +1,7 @@
 import { Comic } from 'src/comics/entities/comic.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'author' })
 export class Author {
   @PrimaryGeneratedColumn('uuid')
   id: string;

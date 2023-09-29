@@ -1,26 +1,72 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateComicDto } from './dto/create-comic.dto';
 import { UpdateComicDto } from './dto/update-comic.dto';
+import { Comic } from './entities/comic.entity';
+import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class ComicsService {
+  private mockComics: Comic[] = [];
+  constructor() {
+    this.mockComics = Array.from({ length: 50 }).map(
+      (): Comic => ({
+        id: faker.string.uuid(),
+        slug: faker.lorem.slug(),
+        title: faker.lorem.paragraph(),
+        coverImage: faker.image.url(),
+        createdAt: faker.date.past(),
+        updatedAt: faker.date.past(),
+      }),
+    );
+  }
   create(createComicDto: CreateComicDto) {
-    return 'This action adds a new comic';
+    const newComic: Comic = {
+      id: faker.string.uuid(),
+      slug: faker.lorem.slug(),
+      title: faker.lorem.paragraph(),
+      coverImage: faker.image.url(),
+      ...createComicDto,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.mockComics.push(newComic);
+    return newComic;
   }
 
   findAll() {
-    return `This action returns all comics`;
+    return this.mockComics;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} comic`;
+  findOne(id: string) {
+    return this.mockComics.find((comic) => comic.id === id);
   }
 
-  update(id: number, updateComicDto: UpdateComicDto) {
-    return `This action updates a #${id} comic`;
+  update(id: string, updateComicDto: UpdateComicDto) {
+    const existingComic = this.findOne(id);
+    if (!existingComic) {
+      throw new NotFoundException(`Comic with ID ${id} not found`);
+    }
+
+    const updatedComic = {
+      ...existingComic,
+      ...updateComicDto,
+      updatedAt: new Date(),
+    };
+
+    const index = this.mockComics.indexOf(existingComic);
+    this.mockComics[index] = updatedComic;
+
+    return updatedComic;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comic`;
+  remove(id: string) {
+    const existingComic = this.findOne(id);
+    if (!existingComic) {
+      throw new NotFoundException(`Comic with ID ${id} not found`);
+    }
+
+    // Remove the comic from the array
+    const index = this.mockComics.indexOf(existingComic);
+    this.mockComics.splice(index, 1);
   }
 }
