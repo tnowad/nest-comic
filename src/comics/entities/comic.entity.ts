@@ -1,11 +1,14 @@
 import { Author } from 'src/authors/entities/author.entity';
+import { Image } from 'src/images/entities/image.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -25,8 +28,9 @@ export class Comic {
   @JoinTable()
   authors?: Author[];
 
-  @Column()
-  coverImage: string;
+  @OneToOne(() => Image)
+  @JoinColumn()
+  cover: Image;
 
   @CreateDateColumn()
   createdAt: Date;
