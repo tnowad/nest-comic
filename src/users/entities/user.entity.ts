@@ -9,7 +9,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import bcrypt from 'bcrypt';
 
 @Entity()
 export class User {
@@ -51,7 +50,7 @@ export class User {
   @BeforeInsert()
   async hashPassword() {
     const password = this.password;
-    const hashedPassword = await bcrypt.hash(password, process.env.SALT || 8);
+    const hashedPassword = await Bun.password.hash(password);
     this.password = hashedPassword;
   }
 }
