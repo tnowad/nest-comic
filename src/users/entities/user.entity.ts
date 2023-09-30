@@ -1,5 +1,14 @@
 import { Image } from 'src/images/entities/image.entity';
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  Index,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import bcrypt from 'bcrypt';
 
 @Entity()
@@ -7,10 +16,12 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Index({ unique: true })
   @Column({ unique: true, length: 50 })
   username: string;
 
-  @Column()
+  @Index({ unique: true })
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -25,8 +36,17 @@ export class User {
   @Column()
   bio: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 
   @BeforeInsert()
   async hashPassword() {
