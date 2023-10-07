@@ -44,7 +44,6 @@ import { MailerModule } from './mailer/mailer.module';
         twitterConfig,
         appleConfig,
       ],
-      envFilePath: ['.env'],
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
