@@ -19,4 +19,4 @@ WORKDIR /usr/src/app
 RUN if [ ! -f .env ]; then cp env-example .env; fi
 RUN npm run build
 
-CMD ["/opt/startup.dev.sh"]
+CMD ["/opt/startup.prod.sh"]
