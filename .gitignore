@@ -33,6 +33,8 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.vercel
 
+.data
+/files
 .env
+/ormconfig.json
