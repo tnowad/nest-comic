@@ -20,7 +20,12 @@ class AppEnvironmentVariablesValidator {
   APP_PORT?: number;
 }
 
-const appConfig = registerAs('app', () => {
+export type AppConfig = {
+  nodeEnv: Environment;
+  appPort: number;
+};
+
+const appConfig = registerAs('app', (): AppConfig => {
   const validatedConfig = validateConfig(
     process.env,
     AppEnvironmentVariablesValidator,
