@@ -4,10 +4,11 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { ComicsModule } from './comics/comics.module';
+import { LanguagesModule } from './languages/languages.module';
 import configOptions from './config/options.config';
 
 @Module({
-  imports: [ConfigModule.forRoot(configOptions), DatabaseModule, ComicsModule],
+  imports: [ConfigModule.forRoot(configOptions), DatabaseModule, ComicsModule, LanguagesModule],
   controllers: [AppController],
   providers: [AppService],
 })
