@@ -14,6 +14,7 @@ import { Configurations, WasValidated } from 'src/config/configurations';
           type: 'postgres',
           url: configService.get('postgres.url', { infer: true }),
           entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+          logging: 'all',
           autoLoadEntities: true,
           synchronize: true,
         };
