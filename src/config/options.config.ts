@@ -1,6 +1,6 @@
 import { ConfigModuleOptions } from '@nestjs/config';
 import appConfig from './app.config';
-import postgresConfig from 'src/database/config/postgres.config';
+import postgresConfig from '../database/config/postgres.config';
 
 const configOptions: ConfigModuleOptions = {
   isGlobal: true,

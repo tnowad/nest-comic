@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Language } from 'src/languages/entities/language.entity';
 import { EntityManager } from 'typeorm';
 import { languages } from './lanuages.data';
+import { Language } from '../languages/entities/language.entity';
 
 @Injectable()
 export class SeedsService {

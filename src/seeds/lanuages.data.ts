@@ -1,4 +1,4 @@
-import type { CreateLanguageDto } from 'src/languages/dto/create-language.dto';
+import { CreateLanguageDto } from '../languages/dto/create-language.dto';
 
 export const languages: CreateLanguageDto[] = [
   {
