@@ -6,10 +6,18 @@ import { DatabaseModule } from './database/database.module';
 import { ComicsModule } from './comics/comics.module';
 import { LanguagesModule } from './languages/languages.module';
 import { SeedsModule } from './seeds/seeds.module';
+import { ComicTranslationsModule } from './comic-translations/comic-translations.module';
 import configOptions from './config/options.config';
 
 @Module({
-  imports: [ConfigModule.forRoot(configOptions), DatabaseModule, ComicsModule, LanguagesModule, SeedsModule],
+  imports: [
+    ConfigModule.forRoot(configOptions),
+    DatabaseModule,
+    ComicsModule,
+    LanguagesModule,
+    SeedsModule,
+    ComicTranslationsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
