@@ -3,9 +3,11 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ComicTranslation } from '../../comic-translations/entities/comic-translation.entity';
 
 @Entity()
 export class Language {
@@ -23,6 +25,9 @@ export class Language {
 
   @Column('boolean', { name: 'is_rtl' })
   rtl: boolean;
+
+  @OneToMany(() => ComicTranslation, (translation) => translation.language)
+  comicTranslations: ComicTranslation[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;

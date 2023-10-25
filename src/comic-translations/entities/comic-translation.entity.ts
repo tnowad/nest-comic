@@ -3,38 +3,35 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ComicTranslation } from '../../comic-translations/entities/comic-translation.entity';
-
-export enum ComicStatus {
-  ON_GOING = 'on_going',
-  COMPLETED = 'completed',
-  DROPPED = 'dropped',
-}
+import { Comic } from '../../comics/entities/comic.entity';
+import { Language } from '../../languages/entities/language.entity';
 
 @Entity()
-export class Comic {
+export class ComicTranslation {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column('uuid', { name: 'comic_id' })
+  comicId: string;
+
+  @Column('uuid', { name: 'language_id' })
+  languageId: string;
 
   @Column('text', { name: 'title' })
   title: string;
 
-  @Column('enum', {
-    name: 'status',
-    enum: ComicStatus,
-    default: ComicStatus.ON_GOING,
-  })
-  status: ComicStatus;
-
   @Column('text', { name: 'description' })
   description: string;
 
-  @OneToMany(() => ComicTranslation, (translation) => translation.comic)
-  translations: ComicTranslation[];
+  @ManyToOne(() => Comic, (comic) => comic.translations)
+  comic: Comic;
+
+  @ManyToOne(() => Language, (language) => language.comicTranslations)
+  language: Language;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
