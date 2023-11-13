@@ -36,3 +36,12 @@ export const Permissions = {
   AUTH_EMAIL_SIGN_OUT,
   USER_UPDATE_OWN_PROFILE,
 } as const;
+
+export const permissions: Omit<PermissionEntity, 'id'>[] = Object.entries(
+  Permissions,
+).map(([key, value]) => ({
+  name: key,
+  subject: value.subject,
+  action: value.action,
+  conditions: value.conditions,
+}));
