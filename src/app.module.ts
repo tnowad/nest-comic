@@ -8,6 +8,7 @@ import { LanguagesModule } from './languages/languages.module';
 import { SeedsModule } from './seeds/seeds.module';
 import { ComicTranslationsModule } from './comic-translations/comic-translations.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import configOptions from './config/options.config';
 
 @Module({
@@ -19,6 +20,7 @@ import configOptions from './config/options.config';
     SeedsModule,
     ComicTranslationsModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
