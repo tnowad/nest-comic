@@ -9,6 +9,7 @@ import { SeedsModule } from './seeds/seeds.module';
 import { ComicTranslationsModule } from './comic-translations/comic-translations.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { PermissionsModule } from './permissions/permissions.module';
 import configOptions from './config/options.config';
 
 @Module({
@@ -21,6 +22,7 @@ import configOptions from './config/options.config';
     ComicTranslationsModule,
     UsersModule,
     AuthModule,
+    PermissionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
