@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import type { Configurations, WasValidated } from './config/configurations';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationInputPipe } from './core/pipes/validation-input.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,7 +24,7 @@ async function bootstrap() {
     ],
   });
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.useGlobalPipes(new ValidationInputPipe());
 
   const configService = app.get(ConfigService<Configurations, WasValidated>);
 
