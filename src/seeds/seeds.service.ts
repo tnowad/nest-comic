@@ -14,7 +14,13 @@ export class SeedsService {
   }
 
   async createDefaultLanguage(entityManager: EntityManager) {
-    entityManager.clear(Language);
-    await entityManager.save(Language, languages);
+    const existingLanguages = await entityManager.find(Language);
+
+    const newLanguages = languages.filter((language) =>
+      existingLanguages.every((l) => l.code !== language.code),
+    );
+
+    await entityManager.save(Language, newLanguages);
   }
+
 }
