@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserStatus } from '../entities/user.entity';
-import { PASSWORD_REGEX, PHONE_NUMBER_REGEX } from '../../constants';
+import { PASSWORD_REGEX, PHONE_NUMBER_REGEX } from '../../core/constants';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'user@example.com' })

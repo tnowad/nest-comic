@@ -8,7 +8,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { PASSWORD_REGEX, PHONE_NUMBER_REGEX } from '../../constants';
+import { PASSWORD_REGEX, PHONE_NUMBER_REGEX } from '../../core/constants';
 
 export class EmailSignUpDto {
   @ApiProperty({ example: 'user@example.com' })
