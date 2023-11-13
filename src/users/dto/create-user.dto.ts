@@ -13,11 +13,6 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Username cannot be empty' })
-  @MaxLength(50, { message: 'Username cannot be longer than 50 characters' })
-  username: string;
-
-  @IsString()
   @IsNotEmpty({ message: 'Password cannot be empty' })
   password: string;
 

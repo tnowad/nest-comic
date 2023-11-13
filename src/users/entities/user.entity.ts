@@ -20,9 +20,6 @@ export class User {
   @Column('text', { name: 'email', unique: true })
   email: string;
 
-  @Column('text', { name: 'username', unique: true })
-  username: string;
-
   @Column('text', { name: 'password' })
   password: string;
 
