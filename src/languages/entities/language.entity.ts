@@ -9,7 +9,10 @@ import {
 } from 'typeorm';
 import { ComicTranslation } from '../../comic-translations/entities/comic-translation.entity';
 
-@Entity()
+@Entity({
+  name: 'languages',
+  comment: 'Table listing supported languages for comic translations',
+})
 export class Language {
   @PrimaryGeneratedColumn('uuid')
   id: string;
