@@ -15,7 +15,10 @@ export enum ComicStatus {
   DROPPED = 'dropped',
 }
 
-@Entity()
+@Entity({
+  name: 'comics',
+  comment: 'Table storing main comic details and metadata',
+})
 export class Comic {
   @PrimaryGeneratedColumn('uuid')
   id: string;
