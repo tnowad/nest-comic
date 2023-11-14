@@ -10,7 +10,11 @@ import {
 import { Comic } from '../../comics/entities/comic.entity';
 import { Language } from '../../languages/entities/language.entity';
 
-@Entity()
+@Entity({
+  name: 'comic_translations',
+  comment:
+    'Table containing translations for different comics in various languages',
+})
 export class ComicTranslation {
   @PrimaryGeneratedColumn('uuid')
   id: string;
