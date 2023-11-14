@@ -12,7 +12,10 @@ export enum UserStatus {
   INACTIVE = 'inactive',
 }
 
-@Entity()
+@Entity({
+  name: 'users',
+  comment: 'Table storing user account details and information',
+})
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
