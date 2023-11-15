@@ -13,6 +13,7 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { ChaptersModule } from './chapters/chapters.module';
 import { ChapterTranslationsModule } from './chapter-translations/chapter-translations.module';
 import { VolumesModule } from './volumes/volumes.module';
+import { ChapterImagesModule } from './chapter-images/chapter-images.module';
 import configOptions from './config/options.config';
 
 @Module({
@@ -29,6 +30,7 @@ import configOptions from './config/options.config';
     ChaptersModule,
     ChapterTranslationsModule,
     VolumesModule,
+    ChapterImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
