@@ -10,6 +10,7 @@ import { ComicTranslationsModule } from './comic-translations/comic-translations
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PermissionsModule } from './permissions/permissions.module';
+import { VolumesModule } from './volumes/volumes.module';
 import configOptions from './config/options.config';
 
 @Module({
@@ -23,6 +24,7 @@ import configOptions from './config/options.config';
     UsersModule,
     AuthModule,
     PermissionsModule,
+    VolumesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
