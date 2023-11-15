@@ -4,6 +4,7 @@ import {
   DeleteDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,9 +24,6 @@ export class Comic {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('text', { name: 'title' })
-  title: string;
-
   @Column('enum', {
     name: 'status',
     enum: ComicStatus,
@@ -33,8 +31,11 @@ export class Comic {
   })
   status: ComicStatus;
 
-  @Column('text', { name: 'description' })
-  description: string;
+  @Column('uuid', { name: 'default_comic_translation_id' })
+  defaultTranslationId: string;
+
+  @OneToOne(() => ComicTranslation, (translation) => translation.comic)
+  defaultTranslation: ComicTranslation;
 
   @OneToMany(() => ComicTranslation, (translation) => translation.comic, {
     cascade: ['insert', 'update', 'remove'],
