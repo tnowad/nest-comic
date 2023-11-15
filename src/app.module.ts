@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { ChaptersModule } from './chapters/chapters.module';
+import { ChapterTranslationsModule } from './chapter-translations/chapter-translations.module';
 import { VolumesModule } from './volumes/volumes.module';
 import configOptions from './config/options.config';
 
@@ -26,6 +27,7 @@ import configOptions from './config/options.config';
     AuthModule,
     PermissionsModule,
     ChaptersModule,
+    ChapterTranslationsModule,
     VolumesModule,
   ],
   controllers: [AppController],
