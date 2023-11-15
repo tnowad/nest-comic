@@ -29,7 +29,9 @@ export class Language {
   @Column('boolean', { name: 'is_rtl' })
   rtl: boolean;
 
-  @OneToMany(() => ComicTranslation, (translation) => translation.language)
+  @OneToMany(() => ComicTranslation, (translation) => translation.language, {
+    cascade: ['insert', 'update', 'remove'],
+  })
   comicTranslations: ComicTranslation[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })

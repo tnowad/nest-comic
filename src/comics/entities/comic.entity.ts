@@ -36,7 +36,9 @@ export class Comic {
   @Column('text', { name: 'description' })
   description: string;
 
-  @OneToMany(() => ComicTranslation, (translation) => translation.comic)
+  @OneToMany(() => ComicTranslation, (translation) => translation.comic, {
+    cascade: ['insert', 'update', 'remove'],
+  })
   translations: ComicTranslation[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
