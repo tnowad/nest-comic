@@ -3,27 +3,35 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
+import { TransactionWrapper } from '../transactions/transaction.wrapper';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private transactionWrapper: TransactionWrapper,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create(createUserDto);
+  async create(createUserDto: CreateUserDto, manager?: EntityManager) {
+    return await this.transactionWrapper.executeTransaction(async (manager) => {
+      const existingUser = await this.userRepository.findOne({
+        where: { email: createUserDto.email },
+      });
 
-    if (user) {
-      throw new BadRequestException('User already exists');
-    }
+      if (existingUser) {
+        throw new BadRequestException('User already exists');
+      }
 
-    return this.userRepository.save(createUserDto);
+      const user = this.userRepository.create(createUserDto);
+
+      return manager.save(user);
+    }, manager);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.userRepository.find();
   }
 
   findOne(id: number) {
