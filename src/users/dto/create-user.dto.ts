@@ -61,7 +61,7 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   @MaxLength(150, { message: 'Full name cannot be longer than 150 characters' })
-  fullName: string;
+  fullName?: string;
 
   @ApiProperty({ example: 'The Dark One' })
   @IsString()
@@ -73,5 +73,6 @@ export class CreateUserDto {
   @IsEnum(UserStatus, {
     message: `Status must be one of the following values: ${Object.values(UserStatus).join(', ')}`,
   })
-  status: UserStatus;
+  @IsOptional()
+  status?: UserStatus;
 }
