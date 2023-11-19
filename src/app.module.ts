@@ -15,6 +15,7 @@ import { ChapterTranslationsModule } from './chapter-translations/chapter-transl
 import { VolumesModule } from './volumes/volumes.module';
 import { ChapterImagesModule } from './chapter-images/chapter-images.module';
 import { ResourceProvidersModule } from './resource-providers/resource-providers.module';
+import { TransactionsModule } from './transactions/transactions.module';
 import configOptions from './config/options.config';
 
 @Module({
@@ -33,6 +34,7 @@ import configOptions from './config/options.config';
     VolumesModule,
     ChapterImagesModule,
     ResourceProvidersModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
