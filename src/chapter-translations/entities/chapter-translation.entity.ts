@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Language } from '../../languages/entities/language.entity';
 import { Chapter } from '../../chapters/entities/chapter.entity';
+import { ChapterImage } from '../../chapter-images/entities/chapter-image.entity';
 
 @Entity()
 export class ChapterTranslation {
@@ -23,6 +24,8 @@ export class ChapterTranslation {
   })
   chapterId: string;
 
+  @OneToMany(() => ChapterImage, (image) => image.chapterTranslation)
+  images: ChapterImage[];
 
   @ManyToOne(() => Language, (language) => language.chapterTranslations)
   language: Language;
