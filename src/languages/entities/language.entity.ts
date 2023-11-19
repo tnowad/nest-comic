@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ComicTranslation } from '../../comic-translations/entities/comic-translation.entity';
+import { ChapterTranslation } from '../../chapter-translations/entities/chapter-translation.entity';
 
 @Entity({
   name: 'languages',
@@ -33,6 +34,11 @@ export class Language {
     cascade: ['insert', 'update', 'remove'],
   })
   comicTranslations: ComicTranslation[];
+
+  @OneToMany(() => ChapterTranslation, (translation) => translation.language, {
+    cascade: ['insert', 'update', 'remove'],
+  })
+  chapterTranslations: ChapterTranslation[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
