@@ -1,24 +1,32 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { EmailSignUpDto } from './dto/email-sign-up.dto';
-import { UsersService } from '../users/users.service';
-import { CreateUserDto } from '../users/dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
 import { Repository } from 'typeorm';
+import { CryptoService } from '../crypto/crypto.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UsersService,
     @InjectRepository(User) private userRepository: Repository<User>,
+    private readonly cryptoService: CryptoService,
   ) {}
 
   async signUp(emailSignUpDto: EmailSignUpDto) {
-    const createUserDto: CreateUserDto = {
-      ...emailSignUpDto,
-    };
+    const existingUser = await this.userRepository.findOne({
+      where: { email: emailSignUpDto.email },
+    });
+    if (existingUser) {
+      throw new BadRequestException('User already exists');
+    }
 
-    return this.usersService.create(createUserDto);
+    emailSignUpDto.password = await this.cryptoService.hashPassword(
+      emailSignUpDto.password,
+    );
+
+    const user = await this.userRepository.save(emailSignUpDto);
+
+    return user;
   }
 
   async signIn(signInDto: EmailSignUpDto) {
@@ -30,7 +38,12 @@ export class AuthService {
       throw new BadRequestException('User not found');
     }
 
-    if (user.password !== signInDto.password) {
+    if (
+      !(await this.cryptoService.comparePassword(
+        signInDto.password,
+        user.password,
+      ))
+    ) {
       throw new BadRequestException('Invalid password');
     }
 
