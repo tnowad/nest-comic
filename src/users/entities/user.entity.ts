@@ -38,7 +38,7 @@ export class User {
   @Column('text', { name: 'last_name' })
   lastName: string;
 
-  @Column('text', { name: 'full_name' })
+  @Column('text', { name: 'full_name', nullable: true })
   fullName: string;
 
   @Column('text', { name: 'nickname' })
