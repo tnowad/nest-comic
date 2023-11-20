@@ -1,40 +1,51 @@
-# Development stage
-FROM node:lts-alpine as development
+# Base stage
+FROM node:lts-alpine as base
 
-# Set PNPM environment variables
+# Set PNPM environment variables and enable corepack
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-# Set working directory and install dependencies
+# Set working directory
 WORKDIR /usr/src/app
+
+# Development stage
+FROM base as development
+
+# Install dependencies
 COPY --chown=node:node package*.json ./
 RUN pnpm install
 COPY --chown=node:node . .
+
 USER node
 
 # Build stage
-FROM node:lts-alpine as build
+FROM base as build
 
-# Set working directory and copy necessary files
-WORKDIR /usr/src/app
-COPY --chown=node:node package*.json ./
-COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node . .
+# Copy dependencies and source code from development stage
+COPY --chown=node:node --from=development /usr/src/app ./
 
 # Build the application
 RUN pnpm run build
-ENV NODE_ENV production
-RUN pnpm install --prod && pnpm cache clean --force
+
+# Set production environment variable and install production dependencies
+ENV NODE_ENV=production
+RUN pnpm install --prod && pnpm store prune
+
 USER node
 
 # Production stage
 FROM node:lts-alpine as production
 
-# Set working directory and copy production files
+# Set working directory
 WORKDIR /usr/src/app
-COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+
+# Copy production files from build stage
+COPY --chown=node:node --from=build /usr/src/app ./
+
+# Set NODE_ENV to production (if not inherited)
+ENV NODE_ENV=production
 
 # Run the application
-CMD [ "node", "dist/main.js" ]
+CMD [ "node", "dist/src/main.js" ]
+
