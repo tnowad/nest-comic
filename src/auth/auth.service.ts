@@ -4,12 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CryptoService } from '../crypto/crypto.service';
+import { JwtService } from '@nestjs/jwt';
+import { EmailSignInDto } from './dto/email-sign-in.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly cryptoService: CryptoService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async signUp(emailSignUpDto: EmailSignUpDto) {
@@ -29,7 +32,7 @@ export class AuthService {
     return user;
   }
 
-  async signIn(signInDto: EmailSignUpDto) {
+  async signIn(signInDto: EmailSignInDto) {
     const user = await this.userRepository.findOne({
       where: { email: signInDto.email },
     });
@@ -48,5 +51,24 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  async generateTokens(user: User) {
+    const accessToken = await this.generateToken(user);
+    const refreshToken = await this.generateToken(user, '7d', 'refresh');
+
+    return { accessToken, refreshToken };
+  }
+
+  async generateToken(user: User, expiresIn?: string, secret?: string) {
+    const payload = {
+      id: user.id,
+      email: user.email,
+    };
+
+    return this.jwtService.sign(payload, {
+      ...(expiresIn && { expiresIn }),
+      ...(secret && { secret }),
+    });
   }
 }
