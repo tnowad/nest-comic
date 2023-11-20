@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { ComicsModule } from './comics/comics.module';
 import { LanguagesModule } from './languages/languages.module';
@@ -18,10 +18,20 @@ import { ResourceProvidersModule } from './resource-providers/resource-providers
 import { TransactionsModule } from './transactions/transactions.module';
 import { CryptoModule } from './crypto/crypto.module';
 import configOptions from './config/options.config';
+import { JwtModule } from '@nestjs/jwt';
+import { Configurations } from './config/configurations';
 
 @Module({
   imports: [
     ConfigModule.forRoot(configOptions),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService<Configurations>) => ({
+        secret: configService.get('jwt.secret', { infer: true }),
+        signOptions: { expiresIn: '5m' },
+      }),
+      inject: [ConfigService],
+    }),
     DatabaseModule,
     ComicsModule,
     LanguagesModule,
