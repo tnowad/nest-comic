@@ -20,6 +20,7 @@ export class AuthService {
 
     return this.usersService.create(createUserDto);
   }
+
   async signIn(signInDto: EmailSignUpDto) {
     const user = await this.userRepository.findOne({
       where: { email: signInDto.email },

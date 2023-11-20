@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { EntityManager, Repository } from 'typeorm';
 import { TransactionWrapper } from '../transactions/transaction.wrapper';
+import { CryptoService } from '../crypto/crypto.service';
 
 @Injectable()
 export class UsersService {
@@ -12,6 +13,7 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private transactionWrapper: TransactionWrapper,
+    private cryptoService: CryptoService,
   ) {}
 
   async create(createUserDto: CreateUserDto, manager?: EntityManager) {
@@ -23,6 +25,10 @@ export class UsersService {
       if (existingUser) {
         throw new BadRequestException('User already exists');
       }
+
+      createUserDto.password = await this.cryptoService.hashPassword(
+        createUserDto.password,
+      );
 
       const user = this.userRepository.create(createUserDto);
 
